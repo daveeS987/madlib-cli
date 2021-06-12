@@ -2,7 +2,7 @@
 
 ## Links and Resources
 
-- [Lab3 Pull Request]()
+- [Lab3 Pull Request](https://github.com/daveeS987/madlib-cli/pull/1)
 
 ## Overview
 
