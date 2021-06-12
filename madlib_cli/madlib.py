@@ -14,6 +14,10 @@ Please answer all questions
 
 
 def read_template(location_of_file):
+    """
+    INPUT >> path to file
+    OUTPUT >> raw string
+    """
     try:
         with open(location_of_file, "r") as file:
             content = file.read()
@@ -21,14 +25,15 @@ def read_template(location_of_file):
     except FileNotFoundError as fnf_error:
         print("An error was encountered when grabbing a file")
         print(fnf_error)
+        raise FileNotFoundError
 
 
 def parse_template(string):
     """
-    - input will be a string > from read_template function
-    - output will be an array with two parts
-      - stripped string
-      - a tuple with the values taken out
+    INPUT >> string from read_template function
+    OUTPUT >> tuple with two parts
+        - stripped string
+        - a tuple with the values taken out
     """
 
     pattern = r"\{([\w\s]+)\}"
@@ -43,23 +48,23 @@ def parse_template(string):
 
 def merge(string, user_input):
     """
-    - Two inputs:
+    INPUTS
       - the template string
       - a tuple with user input
-    - Output will be a combined string
+    OUTPUT >> will be a combined string
     """
+
     merged_string = string.format(*user_input)
     return merged_string
 
 
 def ask_user_questions(words_tuple):
     """
-    - input is a tuple of keywords
-    - output is a tuple of user answers
+    INPUT >> tuple - keywords from template
+    OUTPUT >> tuple of user answers
     """
 
     answers = []
-
     for words in words_tuple:
         response = input(f"Please enter a {words} >> ")
         answers.append(response)
@@ -68,18 +73,21 @@ def ask_user_questions(words_tuple):
     return answer_tuple
 
 
-def main():
+def save_file(final):
+    with open("assets/users_custom_file.txt", "w") as new_file:
+        new_file.write(final)
+
+
+def initialize(template_path):
     print_welcome_message()
-    raw_template = read_template("assets/dark_and_stormy_night_template.txt")
+    raw_template = read_template(template_path)
     stripped_string, key_words = parse_template(raw_template)
     user_response = ask_user_questions(key_words)
     user_input_merged = merge(stripped_string, user_response)
 
     print(user_input_merged)
-    with open("assets/users_custom_file.txt", "w") as new_file:
-        new_file.write(user_input_merged)
+    save_file(user_input_merged)
 
 
 if __name__ == "__main__":
-
-    main()
+    initialize("assets/dark_and_stormy_night_template.txt")
