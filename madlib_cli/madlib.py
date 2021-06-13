@@ -16,7 +16,7 @@ Please answer all questions
 def read_template(location_of_file):
     """
     INPUT >> path to file
-    OUTPUT >> raw string
+    OUTPUT >> raw string of everything in file
     """
     try:
         with open(location_of_file, "r") as file:
@@ -30,17 +30,17 @@ def read_template(location_of_file):
 
 def parse_template(string):
     """
-    INPUT >> string from read_template function
+    INPUT >> raw string from read_template function
     OUTPUT >> tuple with two parts
         - stripped string
         - a tuple with the values taken out
     """
 
-    pattern = r"\{([\w\s]+)\}"
+    pattern = r"\{([\w\s\d\'\-]+)\}"
     words_list = re.findall(pattern, string)
     words_tuple = tuple(words_list)
 
-    replace = r"\{([\w\s]+)\}"
+    replace = r"\{([\w\s\d\'\-]+)\}"
     new_string = re.sub(replace, "{}", string)
 
     return (new_string, words_tuple)
@@ -51,7 +51,7 @@ def merge(string, user_input):
     INPUTS
       - the template string
       - a tuple with user input
-    OUTPUT >> will be a combined string
+    OUTPUT >> a combined string
     """
 
     merged_string = string.format(*user_input)
@@ -90,4 +90,4 @@ def initialize(template_path):
 
 
 if __name__ == "__main__":
-    initialize("assets/dark_and_stormy_night_template.txt")
+    initialize("assets/template_madlib.txt")
