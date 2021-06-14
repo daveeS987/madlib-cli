@@ -83,10 +83,10 @@ def initialize(template_path):
     raw_template = read_template(template_path)
     stripped_string, key_words = parse_template(raw_template)
     user_response = ask_user_questions(key_words)
-    user_input_merged = merge(stripped_string, user_response)
+    merged_user_input = merge(stripped_string, user_response)
 
-    print(user_input_merged)
-    save_file(user_input_merged)
+    print(merged_user_input)
+    save_file(merged_user_input)
 
 
 if __name__ == "__main__":
